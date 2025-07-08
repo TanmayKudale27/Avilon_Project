@@ -1,39 +1,33 @@
 import React from 'react'
+import { BrowserRouter as Router, Routes ,Route } from 'react-router-dom'
 import Header from './components/Header/header';
-import Hero from './components/Hero/Hero';
-import About from './components/About/About';
-import Clients from './components/Clients/Clients';
-import Features from './components/Features/Features';
-import Services from './components/Services/Services';
-import CallToAction from './components/Call/CallToAction';
-import Pricing from './components/Blog/Pricing';
-import Faq from './components/Team/Faq';
-import Team from './components/Team/Team';
-import Gallery from './components/Gallery/Gallery';
-import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
+import Home from './pages/Home'
+import About from './components/About/About';
+import Services from './components/Team/Services';
+import Team from './components/Team/Team';
+import Contact from './components/Contact/Contact';
+
+
 
 
 function App() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Clients />
-        <Features />
-        <Services />
-        <CallToAction />
-        <Pricing />
-        <Faq />
-        <Team />
-        <Gallery />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <Router>
+      <Header/>
+      <Home/>
+         <main>
+            <Routes>
+              <Route path="./" element={<Home/>}/>
+              <Route path="/about" element={<About/>}/>
+              <Route path="/services" element={< Services />} />
+              <Route path="/team" element={<Team/>}/>
+              <Route path="/contact" element={< Contact/>}/>
+            </Routes>
+         </main>
+         <Footer/>
+    </Router>
   )
 }
 
-export default App
+export default App;

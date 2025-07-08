@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 
-const teamMembers = [
+const Team = [
   {
     name: "Walter White",
     role: "Web Development",
@@ -57,7 +57,7 @@ export default function TeamSection() {
       </div>
       <div className="container">
         <div className="row">
-          {teamMembers.map((member, idx) => (
+          {Team.map((member, idx) => (
             <div
               className="col-lg-4 col-md-6 d-flex mb-4"
               key={idx}

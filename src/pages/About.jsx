@@ -3,7 +3,7 @@ import { FaCheckCircle, FaPlayCircle } from "react-icons/fa";
 import "./about.css"; 
 
 const AboutSection = () => (
-  <section id="AboutSection" className="about-section">
+  <section id="about" className="about-section">
     <div className="about-container">
       <div className="about-row">
         <div className="about-img">
