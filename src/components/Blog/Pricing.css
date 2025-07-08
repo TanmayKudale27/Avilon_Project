@@ -1,0 +1,27 @@
+.pricing-card {
+  border-radius: 16px;
+  transition: transform 0.3s ease;
+  background: #fff;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+}
+
+.icon-box {
+  width: 64px;
+  height: 64px;
+  background-color: #0dcaf0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  box-shadow: 0 0 0 10px rgba(13, 202, 240, 0.2);
+}
+
+.featured {
+  border-width: 2px !important;
+  border-color: #0dcaf0 !important;
+}
