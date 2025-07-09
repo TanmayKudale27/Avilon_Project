@@ -37,9 +37,10 @@
 }
 .logo h1.sitename {
   margin: 0;
-  font-size: 30px;
+  font-size: 40px bold;
   font-family:sans-serif;
   color: #0d42ff;
+  font-style:bold;
 }
 
 /* Navmenu */
@@ -118,3 +119,4 @@
     display: block;
   }
 }
+

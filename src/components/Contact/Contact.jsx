@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { MdBorderColor } from "react-icons/md";
 import validator from "validator";
-import "./contact.css";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    number:"",
     subject: "",
     message: "",
   });
@@ -15,13 +16,17 @@ const ContactSection = () => {
 
   const validate = () => {
     const newErrors = {};
-
+    
     if (validator.isEmpty(formData.name)) {
       newErrors.name = "Name is required.";
     }
 
     if (!validator.isEmail(formData.email)) {
       newErrors.email = "Enter a valid email.";
+    }
+
+    if (validator.isEmpty(formData.number)) {
+      newErrors.number = "Enter a valid phone number";
     }
 
     if (validator.isEmpty(formData.subject)) {
@@ -55,6 +60,7 @@ const ContactSection = () => {
     setFormData({
       name: "",
       email: "",
+      number:"",
       subject: "",
       message: "",
     });
@@ -62,35 +68,123 @@ const ContactSection = () => {
     setTimeout(() => setSent(false), 3000);
   };
 
-  return (
-    <section id="contact" className="contact section">
-      <div className="container section-title text-center mb-5" data-aos="fade-up">
-        <h2 className="section-heading">Contact</h2>
-        <div className="section-underline mx-auto"></div>
-        <p className="text-muted mt-3">Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div>
+  const sectionStyle = {
+    padding: "60px 20px",
+    backgroundColor: "#f8f9fa",
+  };
 
-      <div className="container" data-aos="fade" data-aos-delay="100">
-        <div className="row gy-4">
-          <div className="col-lg-4">
-            <div className="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-              <i className="bi bi-geo-alt flex-shrink-0 me-3 fs-4"></i>
+  const titleStyle = {
+    textAlign: "center",
+    marginBottom: "40px",
+  };
+
+  const headingStyle = {
+    fontSize: "32px",
+    fontWeight: "700",
+  };
+
+  const underlineStyle = {
+    width: "60px",
+    height: "4px",
+    backgroundColor: "#007bff",
+    margin: "10px auto",
+    borderRadius: "2px",
+  };
+
+  const textMutedStyle = {
+    color: "#6c757d",
+    marginTop: "15px",
+  };
+
+  const infoItemStyle = {
+    display: "flex",
+    marginBottom: "25px",
+  };
+
+  const iconStyle = {
+    fontSize: "24px",
+    marginRight: "15px",
+    flexShrink: 0,
+  };
+
+  const formStyle = {
+    padding: "20px",
+    backgroundColor: "#fff",
+    borderRadius: "6px",
+    boxShadow: "0 0 10px rgba(0,0,0,0.05)",
+  };
+
+  const inputStyle = {
+    width: "100%",
+    padding: "10px 15px",
+    borderRadius: "4px",
+    border: "1px solid #ced4da",
+    marginBottom: "10px",
+  };
+
+  const invalidInputStyle = {
+    ...inputStyle,
+    border: "1px solid red",
+  };
+
+  const textareaStyle = {
+    ...inputStyle,
+    resize: "vertical",
+  };
+
+  const feedbackStyle = {
+    color: "red",
+    fontSize: "0.9rem",
+    marginBottom: "10px",
+  };
+
+  const sentMessageStyle = {
+    color: "green",
+    fontWeight: "bold",
+    marginTop: "10px",
+  };
+
+  const buttonStyle = {
+    padding: "10px 25px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    marginTop: "10px",
+  };
+
+  return (
+    <section id="contact" style={sectionStyle}>
+      <div style={titleStyle}>
+        <h2 style={headingStyle}>Contact</h2>
+        <div style={underlineStyle}></div>
+        <h5 style={textMutedStyle}>
+          Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit
+        </h5>
+      </div>
+      <div className="container">
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "30px" }}>
+          {/* Contact Info */}
+          <div style={{ flex: "1 1 30%" }}>
+            <div style={infoItemStyle}>
+              <i className="bi bi-geo-alt" style={iconStyle}></i>
               <div>
                 <h3>Address</h3>
                 <p>A108 Adam Street, New York, NY 535022</p>
               </div>
             </div>
 
-            <div className="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-              <i className="bi bi-telephone flex-shrink-0 me-3 fs-4"></i>
+            <div style={infoItemStyle}>
+              <i className="bi bi-telephone" style={iconStyle}></i>
               <div>
                 <h3>Call Us</h3>
                 <p>+91 9359525931</p>
               </div>
             </div>
 
-            <div className="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-              <i className="bi bi-envelope flex-shrink-0 me-3 fs-4"></i>
+            <div style={infoItemStyle}>
+              <i className="bi bi-envelope" style={iconStyle}></i>
               <div>
                 <h3>Email Us</h3>
                 <p>travexa@example.com</p>
@@ -98,60 +192,73 @@ const ContactSection = () => {
             </div>
           </div>
 
-          <div className="col-lg-8">
-            <form className="p-email-form" onSubmit={handleSubmit} noValidate data-aos="fade-up" data-aos-delay="200">
-              <div className="row gy-4">
-                <div className="col-md-6">
+          {/* Contact Form */}
+          <div style={{ flex: "1 1 65%" }}>
+            <form onSubmit={handleSubmit} style={formStyle} validate>
+              <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+                <div style={{ flex: "1 1 48%" }}>
                   <input
                     type="text"
                     name="name"
-                    className={`form-control ${errors.name ? "is-invalid" : ""}`}
                     placeholder="Your Name"
                     value={formData.name}
                     onChange={handleChange}
+                    style={errors.name ? invalidInputStyle : inputStyle}
                   />
-                  {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                  {errors.name && <div style={feedbackStyle}>{errors.name}</div>}
                 </div>
 
-                <div className="col-md-6">
+                <div style={{ flex: "1 1 48%" }}>
                   <input
                     type="email"
                     name="email"
-                    className={`form-control ${errors.email ? "is-invalid" : ""}`}
                     placeholder="Your Email"
                     value={formData.email}
                     onChange={handleChange}
+                    style={errors.email ? invalidInputStyle : inputStyle}
                   />
-                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                  {errors.email && <div style={feedbackStyle}>{errors.email}</div>}
                 </div>
 
-                <div className="col-md-12">
+                <div style={{ flex: "1 1 100%" }}>
+                  <input
+                    type="text"
+                    name="number"
+                    placeholder="Number"
+                    value={formData.number}
+                    onChange={handleChange}
+                    style={errors.number ? invalidInputStyle : inputStyle}
+                  />
+                  {errors.number && <div style={feedbackStyle}>{errors.number}</div>}
+                </div>
+
+                <div style={{ flex: "1 1 100%" }}>
                   <input
                     type="text"
                     name="subject"
-                    className={`form-control ${errors.subject ? "is-invalid" : ""}`}
                     placeholder="Subject"
                     value={formData.subject}
                     onChange={handleChange}
+                    style={errors.subject ? invalidInputStyle : inputStyle}
                   />
-                  {errors.subject && <div className="invalid-feedback">{errors.subject}</div>}
+                  {errors.subject && <div style={feedbackStyle}>{errors.subject}</div>}
                 </div>
 
-                <div className="col-md-12">
+                <div style={{ flex: "1 1 100%" }}>
                   <textarea
                     name="message"
                     rows="6"
-                    className={`form-control ${errors.message ? "is-invalid" : ""}`}
                     placeholder="Message"
                     value={formData.message}
                     onChange={handleChange}
-                  ></textarea>
-                  {errors.message && <div className="invalid-feedback">{errors.message}</div>}
+                    style={errors.message ? { ...textareaStyle, border: '1px solid red' } : textareaStyle}
+                  />
+                  {errors.message && <div style={feedbackStyle}>{errors.message}</div>}
                 </div>
 
-                <div className="col-md-12 text-center">
-                  {sent && <div className="sent-message">Your message has been sent. Thank you!</div>}
-                  <button type="submit" className="btn btn-primary mt-3">Send Message</button>
+                <div style={{ flex: "1 1 100%", textAlign: "center" }}>
+                  {sent && <div style={sentMessageStyle}>Your message has been sent. Thank you!</div>}
+                  <button type="submit" style={buttonStyle}>Send Message</button>
                 </div>
               </div>
             </form>

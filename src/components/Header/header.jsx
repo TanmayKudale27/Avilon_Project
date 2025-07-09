@@ -7,21 +7,21 @@ const Header = () => {
     <header id="header" className="header d-flex align-items-center fixed-top">
       <div className="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-        {/* Logo */}
+        
         <Link to="/" className="logo d-flex align-items-center">
           <h1 className="sitename">Avilon</h1>
         </Link>
 
-        {/* Navigation */}
+       
         <nav id="navmenu" className="navmenu">
           <ul>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About</Link></li>
             <li><Link to="/services">Services</Link></li>
-            <li><Link to="/portfolio">Portfolio</Link></li>
-            <li><Link to="/item">Item</Link></li>
+            {/* <li><Link to="/portfolio">Portfolio</Link></li>
+            <li><Link to="/item">Item</Link></li> */}
 
-            {/* Dropdown Menu */}
+           
             <li className="dropdown">
               <a href="#"><span>Dropdown</span> <i className="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
@@ -42,7 +42,7 @@ const Header = () => {
               </ul>
             </li>
 
-            {/* Contact Link */}
+          
             <li><Link to="/contact">Contact</Link></li>
 
           </ul>
