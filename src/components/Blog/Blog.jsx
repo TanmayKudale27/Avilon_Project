@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Blog = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const sectionStyle = {
     padding: "60px 20px",
     backgroundColor: "#f8f9fa",
@@ -11,17 +17,24 @@ const Blog = () => {
     color: "#0d6efd",
   };
 
-  const cardStyle = {
+  const cardBaseStyle = {
     padding: "20px",
     textAlign: "center",
     borderRadius: "8px",
     backgroundColor: "#fff",
-    boxShadow: "0 0 10px rgba(0,0,0,0.1)",
     height: "100%",
+    opacity: 0,
+    transform: "translateY(40px)",
+    transition: "opacity 0.8s ease, transform 0.8s ease",
+  };
+
+  const animatedCardStyle = {
+    opacity: 1,
+    transform: "translateY(0)",
   };
 
   const cardHighlightedStyle = {
-    ...cardStyle,
+    ...cardBaseStyle,
     border: "2px solid #0d6efd",
     boxShadow: "0 0 15px rgba(0, 123, 255, 0.2)",
   };
@@ -63,7 +76,54 @@ const Blog = () => {
     backgroundColor: "transparent",
     borderRadius: "5px",
     cursor: "pointer",
+    transition: "transform 0.3s ease, background-color 0.3s ease, color 0.3s ease",
   };
+
+  const buttonHoverStyle = {
+    transform: "scale(1.05)",
+    backgroundColor: "#0d6efd",
+    color: "#fff",
+  };
+
+  const [hoveredButton, setHoveredButton] = useState(null);
+
+  // Card wrapper to apply animation delay
+  const renderCard = (title, icon, price, features, unavailable = [], isHighlighted = false, index = 0) => (
+    <div style={{ flex: "1 1 300px", maxWidth: "350px" }}>
+      <div
+        style={{
+          ...(isHighlighted ? cardHighlightedStyle : cardBaseStyle),
+          ...(mounted ? { ...animatedCardStyle, transitionDelay: `${0.2 * index}s` } : {}),
+        }}
+      >
+        <h4 style={{ fontWeight: "bold" }}>{title}</h4>
+        <div style={iconBoxStyle}><i className={`fas ${icon}`}></i></div>
+        <h3 style={priceStyle}>
+          {price} <small style={{ color: "#6c757d", fontSize: "14px" }}>/ month</small>
+        </h3>
+        <ul style={listStyle}>
+          {features.map((item, i) => (
+            <li key={i}><i className="fas fa-check" style={checkIconStyle}></i>{item}</li>
+          ))}
+          {unavailable.map((item, i) => (
+            <li key={`x-${i}`} style={{ color: "#adb5bd" }}>
+              <i className="fas fa-times" style={crossIconStyle}></i>{item}
+            </li>
+          ))}
+        </ul>
+        <button
+          style={{
+            ...buttonStyle,
+            ...(hoveredButton === index ? buttonHoverStyle : {}),
+          }}
+          onMouseEnter={() => setHoveredButton(index)}
+          onMouseLeave={() => setHoveredButton(null)}
+        >
+          Buy Now
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <section id="pricing" style={sectionStyle}>
@@ -75,62 +135,52 @@ const Blog = () => {
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "30px" }}>
-        {/* Free Plan */}
-        <div style={{ flex: "1 1 300px", maxWidth: "350px" }}>
-          <div style={cardStyle}>
-            <h4 style={{ fontWeight: "bold" }}>Free Plan</h4>
-            <div style={iconBoxStyle}><i className="fas fa-box"></i></div>
-            <h3 style={priceStyle}>
-              $0 <small style={{ color: "#6c757d", fontSize: "14px" }}>/ month</small>
-            </h3>
-            <ul style={listStyle}>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Quam adipiscing vitae proin</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Nec feugiat nisl pretium</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Nulla at volutpat diam uteera</li>
-              <li style={{ color: "#adb5bd" }}><i className="fas fa-times" style={crossIconStyle}></i>Pharetra massa massa ultricies</li>
-              <li style={{ color: "#adb5bd" }}><i className="fas fa-times" style={crossIconStyle}></i>Massa ultricies mi quis hendrerit</li>
-            </ul>
-            <button style={buttonStyle}>Buy Now</button>
-          </div>
-        </div>
-
-        {/* Business Plan */}
-        <div style={{ flex: "1 1 300px", maxWidth: "350px" }}>
-          <div style={cardHighlightedStyle}>
-            <h4 style={{ fontWeight: "bold" }}>Business Plan</h4>
-            <div style={iconBoxStyle}><i className="fas fa-rocket"></i></div>
-            <h3 style={priceStyle}>
-              $29 <small style={{ color: "#6c757d", fontSize: "14px" }}>/ month</small>
-            </h3>
-            <ul style={listStyle}>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Quam adipiscing vitae proin</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Nec feugiat nisl pretium</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Nulla at volutpat diam uteera</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Pharetra massa massa ultricies</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Massa ultricies mi quis hendrerit</li>
-            </ul>
-            <button style={buttonStyle}>Buy Now</button>
-          </div>
-        </div>
-
-        {/* Developer Plan */}
-        <div style={{ flex: "1 1 300px", maxWidth: "350px" }}>
-          <div style={cardStyle}>
-            <h4 style={{ fontWeight: "bold" }}>Developer Plan</h4>
-            <div style={iconBoxStyle}><i className="fas fa-paper-plane"></i></div>
-            <h3 style={priceStyle}>
-              $49 <small style={{ color: "#6c757d", fontSize: "14px" }}>/ month</small>
-            </h3>
-            <ul style={listStyle}>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Quam adipiscing vitae proin</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Nec feugiat nisl pretium</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Nulla at volutpat diam uteera</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Pharetra massa massa ultricies</li>
-              <li><i className="fas fa-check" style={checkIconStyle}></i>Massa ultricies mi quis hendrerit</li>
-            </ul>
-            <button style={buttonStyle}>Buy Now</button>
-          </div>
-        </div>
+        {renderCard(
+          "Free Plan",
+          "fa-box",
+          "$0",
+          [
+            "Quam adipiscing vitae proin",
+            "Nec feugiat nisl pretium",
+            "Nulla at volutpat diam uteera",
+          ],
+          [
+            "Pharetra massa massa ultricies",
+            "Massa ultricies mi quis hendrerit",
+          ],
+          false,
+          0
+        )}
+        {renderCard(
+          "Business Plan",
+          "fa-rocket",
+          "$29",
+          [
+            "Quam adipiscing vitae proin",
+            "Nec feugiat nisl pretium",
+            "Nulla at volutpat diam uteera",
+            "Pharetra massa massa ultricies",
+            "Massa ultricies mi quis hendrerit",
+          ],
+          [],
+          true,
+          1
+        )}
+        {renderCard(
+          "Developer Plan",
+          "fa-paper-plane",
+          "$49",
+          [
+            "Quam adipiscing vitae proin",
+            "Nec feugiat nisl pretium",
+            "Nulla at volutpat diam uteera",
+            "Pharetra massa massa ultricies",
+            "Massa ultricies mi quis hendrerit",
+          ],
+          [],
+          false,
+          2
+        )}
       </div>
     </section>
   );

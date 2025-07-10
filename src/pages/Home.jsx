@@ -7,7 +7,8 @@ import Pricing from '../components/Blog/Blog';
 import Faq from '../components/Team/Faq';
 import Gallery from '../components/Gallery/Gallery';
 import Contact from '../components/Contact/Contact'
-import About from '../components/About/About'
+import About from '../components/About/About';
+import Team from '../components/Team/Team';
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <Call />
       <Pricing />
       <Faq />
+      <Team/>
       <Gallery />
       <Contact />
     </>
